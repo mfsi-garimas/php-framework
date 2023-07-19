@@ -20,9 +20,10 @@ class DotEnv
             $data = explode("=", $line, 2);
             $key = $data[0];
             $value = $data[1];
-            if (!array_key_exists($key, $_ENV))
+            if (!array_key_exists($key, $_ENV)) {
                 putenv($key . "=" . $value);
-            $_ENV[$key] = $value;
+                $_ENV[$key] = $value;
+            }
         }
     }
 }
