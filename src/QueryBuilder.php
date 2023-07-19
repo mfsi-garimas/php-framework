@@ -3,7 +3,7 @@
 class QueryBuilder
 {
     private $fields = [];
-    private $conditions = [];
+    private $conditions;
     private $table;
     private $values = [];
 
