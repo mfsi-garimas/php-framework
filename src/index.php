@@ -1,41 +1,23 @@
 <?php
 
-
-require_once('DotEnv.php');
 require_once('QueryBuilder.php');
 
-$dotenv = new DotEnv(getcwd() . '/.env');
-$dotenv->load();
+$db = QueryBuilder::getInstance();
+$db->connect();
 
-try {
-    $conn = new PDO("mysql:host=" . getenv('servername') . ";dbname=" . getenv('database'), getenv('username'), getenv('password'));
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
-
-$db = new QueryBuilder();
-
-//SELECT
-function selectData($db, $conn)
+function selectData($db)
 {
-    $query_select = $db->select("name")->from("users")->get();
-    $pdoStatement = $conn->prepare($query_select);
-    $pdoStatement->execute();
-
-    foreach ($pdoStatement->fetchAll(\PDO::FETCH_ASSOC) as $row) {
-        echo $row["name"];
-    }
+    $query_select = $db->select("name,email")->from("users")->where("name", "Harry")->where("email", "darien59@example.com")->order_by("name ASC", "email ASC")->get();
+    print_r($query_select);
 }
 
-// selectData($db, $conn);
+selectData($db);
 
-function insertData($db, $conn)
+function insertData($db)
 {
     $array = [
-        "name" => "test",
-        "email" => "test@test.com",
+        "name" => "test5",
+        "email" => "test5@test.com",
         "email_verified_at" => date("Y-m-d h:i:s"),
         "password" => "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
         "remember_token" => "lq5nyCuLfa",
@@ -43,27 +25,26 @@ function insertData($db, $conn)
         "updated_at" => "2023-07-10 08:17:34"
     ];
     $query_insert = $db->insert("users", $array);
-    $pdoStatement = $conn->prepare($query_insert);
-    $pdoStatement->execute();
+    print_r($query_insert);
 }
 
-// insertData($db, $conn);
+// insertData($db);
 
-function updateData($db, $conn)
+function updateData($db,)
 {
     $array = [
-        "name" => "test3",
-        "email" => "test3@test.com",
+        "name" => "Harry",
     ];
 
-    $query_update = $db->where("name=:name", "email=:email")->update("users", $array);
-    $pdoStatement = $conn->prepare($query_update);
-    $pdoStatement->execute(
-        [
-            'name' => 'test',
-            'email' => 'test@test.com'
-        ]
-    );
+    $query_update = $db->where("name", "Harry Parker")->where("email", "darien59@example.com")->update("users", $array);
+    print_r($query_update);
 }
 
-updateData($db, $conn);
+// updateData($db);
+
+function delete($db)
+{
+    $query = $db->where("name", "test2")->delete("users");
+    print_r($query);
+}
+// delete($db);
