@@ -1,5 +1,5 @@
 <?php
-require_once('DotEnv.php');
+require_once('./config/DotEnv.php');
 
 class QueryBuilder
 {

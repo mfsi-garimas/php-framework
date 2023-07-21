@@ -1,17 +1,19 @@
 <?php
 
-require_once('QueryBuilder.php');
+require_once('./model/Usermodel.php');
 
-$db = QueryBuilder::getInstance();
+$db = Usermodel::getInstance();
 $db->connect();
 
 function selectData($db)
 {
-    $query_select = $db->select("name,email")->from("users")->where("name", "'; DELETE FROM users; /*")->where("email", "darien59@example.com")->order_by("name ASC", "email ASC")->get();
-    print_r($query_select);
+    $name = "Harry Parker";
+    $email = "darien59@example.com";
+    $result = $db->getdata($name, $email);
+    print_r($result);
 }
 
-selectData($db);
+// selectData($db);
 
 function insertData($db)
 {
@@ -24,27 +26,27 @@ function insertData($db)
         "created_at" => "2023-07-10 08:17:34",
         "updated_at" => "2023-07-10 08:17:34"
     ];
-    $query_insert = $db->insert("users", $array);
-    print_r($query_insert);
+    $result = $db->insert($array);
+    print_r($result);
 }
 
 // insertData($db);
 
-function updateData($db,)
+function updateData($db)
 {
     $array = [
         "name" => "Harry",
     ];
 
-    $query_update = $db->where("name", "Harry Parker")->where("email", "darien59@example.com")->update("users", $array);
-    print_r($query_update);
+    $result = $db->update($array, "Harry Parker", "darien59@example.com");
+    print_r($result);
 }
 
 // updateData($db);
 
 function delete($db)
 {
-    $query = $db->where("name", "test2")->delete("users");
-    print_r($query);
+    $result = $db->delete("test5");
+    print_r($result);
 }
-// delete($db);
+delete($db);
