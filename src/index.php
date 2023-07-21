@@ -7,7 +7,7 @@ $db->connect();
 
 function selectData($db)
 {
-    $query_select = $db->select("name,email")->from("users")->where("name", "Harry")->where("email", "darien59@example.com")->order_by("name ASC", "email ASC")->get();
+    $query_select = $db->select("name,email")->from("users")->where("name", "'; DELETE FROM users; /*")->where("email", "darien59@example.com")->order_by("name ASC", "email ASC")->get();
     print_r($query_select);
 }
 

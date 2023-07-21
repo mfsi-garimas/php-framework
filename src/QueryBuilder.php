@@ -8,6 +8,7 @@ class QueryBuilder
     private $values = [];
     private $order = [];
     private $conditions = [];
+    private $where_val = [];
     private static $obj;
 
     private function __construct()
@@ -45,8 +46,9 @@ class QueryBuilder
 
     public function where(string $key, string $value): self
     {
-        $val = $key . "= '" . $value . "'";
+        $val = $key . "= :" . $key;
         array_push($this->conditions, $val);
+        $this->where_val[$key] = $value;
         return $this;
     }
 
@@ -69,7 +71,13 @@ class QueryBuilder
     {
         try {
             $pdoStatement = $this->conn->prepare($query);
-            $pdoStatement->execute();
+            if (!empty($this->where_val)) {
+
+                // $pdoStatement->bindParam($key, $value, PDO::PARAM_STR);
+                $pdoStatement->execute($this->where_val);
+            } else
+                $pdoStatement->execute();
+
             if ($type == "GET")
                 return $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
             else if ($type == "INSERT")
