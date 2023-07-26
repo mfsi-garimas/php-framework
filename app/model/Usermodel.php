@@ -31,4 +31,9 @@ class Usermodel extends QueryBuilder
             self::$obj = new self();
         return self::$obj;
     }
+
+    public function phone()
+    {
+        return $this->hasOne('./app/model/Phonemodel.php');
+    }
 }

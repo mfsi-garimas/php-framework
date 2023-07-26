@@ -6,14 +6,15 @@ $db = Usermodel::getInstance();
 
 function selectData($db)
 {
-    $name = "Harry Potter";
+    $name = "Harry";
     $email = "darien59@example.com";
 
-    $result = $db->select("name,email")->where("name", $name)->where("email", $email)->order_by("name ASC", "email ASC")->get();
+    // $result = $db->select()->join('phone', 'phone.user_id=users.id', 'left')->order_by("name ASC", "email ASC")->get();
+    $result = $db->select()->order_by("name ASC", "email ASC")->get();
     print_r($result);
 }
 
-// selectData($db);
+selectData($db);
 
 function insertData($db)
 {
@@ -28,7 +29,7 @@ function insertData($db)
     $data->save();
 }
 
-insertData($db);
+// insertData($db);
 
 function updateData($db)
 {

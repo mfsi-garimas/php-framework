@@ -8,7 +8,7 @@ class QueryBuilder
     protected $table;
     private static $conn;
     private $values = [];
-    private $order = [];
+    private $order, $join = [];
     private $conditions = [];
     private $where_val = [];
     private $update_val = [];
@@ -70,7 +70,15 @@ class QueryBuilder
         $condition = '';
         if ($this->conditions)
             $condition = " WHERE " . implode(" AND ", $this->conditions);
-        $query = "SELECT " . implode(",", $this->fields) . " FROM " . $this->table . $condition . " " . $this->order;
+        $join = '';
+        if ($this->join)
+            $join = implode(" ", $this->join);
+        $fields = "*";
+        if ($this->fields)
+            $fields = implode(",", $this->fields);
+
+        $query = "SELECT " . $fields . " FROM " . $this->table . $join . $condition . " " . $this->order;
+
         return $this->response($query, "GET");
     }
 
@@ -88,6 +96,21 @@ class QueryBuilder
         foreach ($this->fillable as $key => $value) {
             $this->update_obj->$value = '';
         }
+        return $this;
+    }
+
+    public function join(string $join, string $condition, string $join_type = 'INNER'): self
+    {
+        $type = '';
+
+        if ($join_type == 'left') {
+            $type = ' LEFT JOIN ';
+        } else if ($join_type == 'right') {
+            $type = ' RIGHT JOIN ';
+        } else {
+            $type = ' JOIN ';
+        }
+        array_push($this->join, $type . $join . " ON " . $condition);
         return $this;
     }
 
@@ -180,5 +203,9 @@ class QueryBuilder
             $condition = " WHERE " . implode(" AND ", $this->conditions);
         $query = "DELETE FROM " . $this->table . $condition;
         return $this->response($query, "DELETE");
+    }
+
+    public function hasOne($model)
+    {
     }
 }
