@@ -1,6 +1,8 @@
 <?php
 
-require_once('./app/model/Usermodel.php');
+use app\model\Usermodel;
+
+require_once(dirname(__DIR__, 2) . '/app/model/Usermodel.php');
 
 $db = Usermodel::getInstance();
 

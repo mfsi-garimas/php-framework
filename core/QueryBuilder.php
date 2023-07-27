@@ -1,6 +1,8 @@
 <?php
 
-require_once('./core/DotEnv.php');
+namespace Framework\Core;
+
+require_once('DotEnv.php');
 
 class QueryBuilder
 {
@@ -12,7 +14,7 @@ class QueryBuilder
     private $conditions = [];
     private $where_val = [];
     private $update_val = [];
-    // private static $obj;
+    private static $obj_qb;
     protected $fillable;
     protected $primaryKey;
     public $update_obj;
@@ -28,22 +30,23 @@ class QueryBuilder
 
     public static function connect()
     {
-        $dotenv = new DotEnv(getcwd() . '/.env');
+        $dotenv = new DotEnv(dirname(__DIR__) . '/.env');
         $dotenv->load();
         try {
-            self::$conn = new PDO("mysql:host=" . getenv('servername') . ";dbname=" . getenv('database'), getenv('username'), getenv('password'));
-            self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
+            self::$conn = new \PDO("mysql:host=" . getenv('servername') . ";dbname=" . getenv('database'), getenv('username'), getenv('password'));
+            self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (\PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
     }
 
-    // public static function getInstance()
-    // {
-    //     if (!self::$obj)
-    //         self::$obj = new self();
-    //     return self::$obj;
-    // }
+    public static function getInstance()
+    {
+        self::connect();
+        if (!self::$obj_qb)
+            self::$obj_qb = new self();
+        return self::$obj_qb;
+    }
 
     public function select(string ...$select): self
     {
@@ -78,7 +81,6 @@ class QueryBuilder
             $fields = implode(",", $this->fields);
 
         $query = "SELECT " . $fields . " FROM " . $this->table . $join . $condition . " " . $this->order;
-
         return $this->response($query, "GET");
     }
 
@@ -92,7 +94,7 @@ class QueryBuilder
 
     public function store()
     {
-        $this->update_obj = new stdClass;
+        $this->update_obj = new \stdClass;
         foreach ($this->fillable as $key => $value) {
             $this->update_obj->$value = '';
         }
@@ -159,7 +161,7 @@ class QueryBuilder
                 return "Record deleted successfully";
             else
                 return "Invalid ";
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             die("ERROR:" . $e->getMessage());
         }
     }

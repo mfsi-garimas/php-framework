@@ -1,6 +1,10 @@
 <?php
 
-require_once('./core/QueryBuilder.php');
+namespace app\model;
+
+use framework\core\QueryBuilder;
+
+require_once(dirname(__DIR__, 2) . '/core/QueryBuilder.php');
 
 class Phonemodel extends QueryBuilder
 {

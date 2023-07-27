@@ -1,5 +1,9 @@
 <?php
 
+use Framework\Core\QueryBuilder;
+
+require_once(dirname(__DIR__, 2) . '/core/QueryBuilder.php');
+
 function validate(array $request, array $rules)
 {
     $error = [];
@@ -17,6 +21,8 @@ function validate(array $request, array $rules)
                     $error[$field]['min'] = removeUnderscore(($field)) . " field is more than minimum length.";
                 } else if ($ruleKey == 'max' && ifvaluemin($request, $field, $rulevalue)) {
                     $error[$field]['max'] = removeUnderscore(($field)) . " field is less than maximum length.";
+                } else if ($ruleKey == 'unique' && checkuniquevalue($request, $field, $rulevalue)) {
+                    $error[$field]['unique'] = removeUnderscore(($field)) . " field already exists";
                 }
             }
         }
@@ -29,6 +35,13 @@ function ifvaluemin($request, $field, $val)
 {
     $check = $request[$field];
     return strlen($check) < $val;
+}
+
+function checkuniquevalue($request, $field, $val)
+{
+    $db = QueryBuilder::getInstance();
+    $query = $db->select()->from($val)->where($field, $request[$field])->get();
+    return !empty($query);
 }
 
 function ifvaluemax($request, $field, $val)
