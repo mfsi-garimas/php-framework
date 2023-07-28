@@ -1,8 +1,8 @@
 <?php
 
-use Framework\Core\QueryBuilder;
+use core\QueryBuilder;
 
-require_once(dirname(__DIR__, 2) . '/core/QueryBuilder.php');
+require_once(dirname(__DIR__, 2) . "/autoload.php");
 
 function validate(array $request, array $rules)
 {

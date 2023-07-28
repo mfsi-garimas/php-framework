@@ -2,9 +2,9 @@
 
 namespace app\model;
 
-use Framework\core\QueryBuilder;
+use core\QueryBuilder;
 
-require_once(dirname(__DIR__, 2) . '/core/QueryBuilder.php');
+require_once(dirname(__DIR__, 2) . "/autoload.php");
 
 class Usermodel extends QueryBuilder
 {
@@ -12,13 +12,13 @@ class Usermodel extends QueryBuilder
     protected $primaryKey = 'id';
     private static $obj;
     protected $fillable = ['name', 'email', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at'];
-    private function __construct()
-    {
-    }
+    // private function __construct()
+    // {
+    // }
 
-    private function __clone()
-    {
-    }
+    // private function __clone()
+    // {
+    // }
 
     // public function __call($method, $args)
     // {
@@ -28,13 +28,13 @@ class Usermodel extends QueryBuilder
     //     }
     // }
 
-    public static function getInstance()
-    {
-        self::connect();
-        if (!self::$obj)
-            self::$obj = new self();
-        return self::$obj;
-    }
+    // public static function getInstance()
+    // {
+    //     self::connect();
+    //     if (!self::$obj)
+    //         self::$obj = new self();
+    //     return self::$obj;
+    // }
 
     public function phone()
     {

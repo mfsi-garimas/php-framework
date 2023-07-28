@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Core;
+namespace core;
 
 class DotEnv
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Framework\Core;
+namespace core;
 
-require_once('DotEnv.php');
+require_once(dirname(__DIR__) . "/autoload.php");
 
 class QueryBuilder
 {
@@ -20,7 +20,7 @@ class QueryBuilder
     public $update_obj;
     private $id;
 
-    private function __construct()
+    protected function __construct()
     {
     }
 
@@ -43,9 +43,9 @@ class QueryBuilder
     public static function getInstance()
     {
         self::connect();
-        if (!self::$obj_qb)
-            self::$obj_qb = new self();
-        return self::$obj_qb;
+        if (!static::$obj_qb)
+            static::$obj_qb = new static();
+        return static::$obj_qb;
     }
 
     public function select(string ...$select): self

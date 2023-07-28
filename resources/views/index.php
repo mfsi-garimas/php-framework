@@ -2,7 +2,7 @@
 
 use app\model\Usermodel;
 
-require_once(dirname(__DIR__, 2) . '/app/model/Usermodel.php');
+require_once(dirname(__DIR__, 2) . "/autoload.php");
 
 $db = Usermodel::getInstance();
 

@@ -2,9 +2,9 @@
 
 namespace app\model;
 
-use framework\core\QueryBuilder;
+use core\QueryBuilder;
 
-require_once(dirname(__DIR__, 2) . '/core/QueryBuilder.php');
+require_once(dirname(__DIR__, 2) . "/autoload.php");
 
 class Phonemodel extends QueryBuilder
 {
