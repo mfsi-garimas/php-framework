@@ -1,8 +1,6 @@
 <?php
 
-use core\QueryBuilder;
-
-require_once(dirname(__DIR__, 2) . "/autoload.php");
+use core\Database;
 
 function validate(array $request, array $rules)
 {
@@ -39,7 +37,7 @@ function ifvaluemin($request, $field, $val)
 
 function checkuniquevalue($request, $field, $val)
 {
-    $db = QueryBuilder::getInstance();
+    $db = Database::getInstance();
     $query = $db->select()->from($val)->where($field, $request[$field])->get();
     return !empty($query);
 }

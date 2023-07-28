@@ -2,11 +2,11 @@
 
 namespace app\model;
 
-use core\QueryBuilder;
+use core\Database;
 
 require_once(dirname(__DIR__, 2) . "/autoload.php");
 
-class Usermodel extends QueryBuilder
+class Usermodel extends Database
 {
     protected $table = 'users';
     protected $primaryKey = 'id';

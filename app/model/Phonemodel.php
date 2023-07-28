@@ -2,11 +2,11 @@
 
 namespace app\model;
 
-use core\QueryBuilder;
+use core\Database;
 
 require_once(dirname(__DIR__, 2) . "/autoload.php");
 
-class Phonemodel extends QueryBuilder
+class Phonemodel extends Database
 {
     protected $table = 'phone';
     protected $primaryKey = 'phone_id';

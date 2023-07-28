@@ -4,7 +4,7 @@ namespace core;
 
 require_once(dirname(__DIR__) . "/autoload.php");
 
-class QueryBuilder
+class Database
 {
     private $fields = [];
     protected $table;
