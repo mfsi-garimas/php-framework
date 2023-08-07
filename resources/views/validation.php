@@ -14,7 +14,7 @@
 
     <div class="container">
         <h2>Register</h2>
-        <form action="./action.php" method="POST">
+        <form action="/action" method="POST">
             <div class="form-group">
                 <label for="email">First Name:</label>
                 <input type="text" class="form-control" id="email" placeholder="Enter first name" name="first_name" required>
