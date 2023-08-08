@@ -16,18 +16,20 @@ $request = $_SERVER['REQUEST_URI'];
 //         break;
 // }
 
-require_once './core/routes/Request.php';
-require_once './core/routes/Routing.php';
+use app\controllers\Main;
+use core\routes\Request;
+use core\routes\Routing;
+
 $router = new Routing(new Request);
 
 $router->get('/', function () {
-    require_once(__DIR__ . "/resources/views/index.php");
+    (new Main)->index();
 });
 
 $router->get('/register', function () {
-    require_once(__DIR__ . "/resources/views/validation.php");
+    (new Main)->register();
 });
 
 $router->get('/action', function () {
-    require_once(__DIR__ . "/resources/views/action.php");
+    (new Main)->action();
 });

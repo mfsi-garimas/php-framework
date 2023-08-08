@@ -1,6 +1,11 @@
 <?php
 
-require_once dirname(__DIR__) . '/interface/IRequest.php';
+namespace core\routes;
+
+require_once(dirname(__DIR__, 2) . "/autoload.php");
+
+use core\interface\IRequest;
+
 class Request implements IRequest
 {
     public function __construct()

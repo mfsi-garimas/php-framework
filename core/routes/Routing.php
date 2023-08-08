@@ -1,5 +1,11 @@
 <?php
 
+namespace core\routes;
+
+require_once(dirname(__DIR__, 2) . "/autoload.php");
+
+use core\interface\IRequest;
+
 class Routing
 {
     private $request;
